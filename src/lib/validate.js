@@ -1,10 +1,10 @@
 const parse = event => {
-  const body = event.deployment_status;
+  const body = event.body;
   return { body };
 };
 
 const hasState = body => {
-  if (!body || !body.state) {
+  if (!body || !body.deployment_status || !body.deployment_status.state) {
     throw new Error("Invalid event data");
   }
 
