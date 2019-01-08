@@ -29,8 +29,15 @@ const init = event => {
 export const hello = async event => {
   try {
     const body = init(event);
-    const data = requestTti("https://digital.canada.ca", data => {
-      console.log(data);
+    const data = await requestTti("https://example.com");
+
+    console.log(data)
+
+    await saveToFirestore({
+      repo: "myrepo",
+      sha: after,
+      data,
+      branch: "123"
     });
 
     const msg = "called it";
