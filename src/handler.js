@@ -2,7 +2,7 @@
 import octokit, {
   notify,
   validate,
-  build,
+  requestTti,
   loadFromFirestore,
   saveToFirestore
 } from "./lib/";
@@ -15,19 +15,24 @@ export const localPayload = async () => {
 };
 
 const init = event => {
-  const body = validate(event)
+  const body = validate(event);
 
   notify(body, octokit, {
     state: "pending",
     description: "Checking TTI"
   });
 
+  //send request to lighthouse
   return body;
 };
 
 export const hello = async event => {
   try {
     const body = init(event);
+    const data = requestTti("https://digital.canada.ca", data => {
+      console.log(data);
+    });
+
     const msg = "called it";
     return msg;
   } catch (e) {
