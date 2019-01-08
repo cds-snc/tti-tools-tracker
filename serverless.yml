@@ -1,0 +1,24 @@
+service: tti-tracker
+
+provider:
+  name: google
+  runtime: nodejs8
+  project: tti-tools
+  credentials: ./keyfile.json
+  memorySize: 2048
+  timeout: 240s
+
+plugins:
+  - serverless-google-cloudfunctions
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
+
+functions:
+  hello:
+    handler: trackTti
+    events:
+      - http: path

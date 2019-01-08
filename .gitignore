@@ -1,0 +1,13 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# Editor Files
+*.swp
+.DS_Store
+
+.env
+keyfile.json
