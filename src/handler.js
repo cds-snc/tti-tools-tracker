@@ -44,8 +44,8 @@ export const hello = async event => {
     */
 
     await saveToFirestore({
-      repo: "myrepo",
-      sha: event.deployment.sha,
+      repo: "hey",
+      sha:  event.deployment.sha,
       data,
       branch: "123"
     });
