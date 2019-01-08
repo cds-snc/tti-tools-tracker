@@ -18,7 +18,7 @@ const validate = event => {
 export const notify = async (
   event,
   octokit,
-  status = { state: "pending", description: "Checking bundle size" }
+  status = { state: "pending", description: "Checking TTI" }
 ) => {
   if (!validate(event)) return false;
 
@@ -41,8 +41,8 @@ export const notify = async (
     {
       owner: repoOwner,
       repo: repoName,
-      sha: event.after,
-      context: "Bundle Tracker"
+      sha: event.deployment.sha,
+      context: "TTI Tracker"
     },
     status
   );

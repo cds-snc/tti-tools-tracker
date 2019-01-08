@@ -31,11 +31,21 @@ export const hello = async event => {
     const body = init(event);
     const data = await requestTti("https://example.com");
 
-    console.log(data)
+    console.log(data);
+
+    /*
+     "sha": "8bf351bf0e7d2ce02f1297c108352e28b8c64d25",
+      "ref": "8bf351bf0e7d2ce02f1297c108352e28b8c64d25",
+      "task": "deploy",
+      "payload": {
+        "web_url": "https://bundle-size-tracker-demo-pr-15.herokuapp.com/"
+      },
+
+    */
 
     await saveToFirestore({
       repo: "myrepo",
-      sha: after,
+      sha: event.deployment.sha,
       data,
       branch: "123"
     });
