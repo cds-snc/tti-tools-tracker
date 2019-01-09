@@ -3,8 +3,9 @@ import octokit, {
   notify,
   validate,
   requestTti,
-  // loadFromFirestore,
-  saveToFirestore
+  loadFromFirestore,
+  saveToFirestore,
+  calculateDelta
 } from "./lib/";
 
 import { webhook } from "./__mocks__/webhook";
@@ -19,7 +20,7 @@ const init = event => {
 
   notify(body, octokit, {
     state: "pending",
-    description: "Checking TTI"
+    description: "Validating payload"
   });
 
   // send request to lighthouse
@@ -31,21 +32,41 @@ export const hello = async event => {
     const body = init(event);
     const {
       sha,
-      payload: { web_url } // eslint-disable-line camelcase
+      payload: { web_url }, // eslint-disable-line camelcase
+      environment
     } = body.deployment;
+
+    notify(body, octokit, {
+      state: "pending",
+      description: "Running Lighthouse"
+    });
 
     const data = await requestTti(web_url);
 
     const { full_name } = body.repository; // eslint-disable-line camelcase
 
+    const [previousPR, previousMaster] = await loadFromFirestore(
+      full_name,
+      environment
+    );
+
+    const msg = `Master: ${calculateDelta(
+      data,
+      previousMaster.data
+    )}s, Branch: ${calculateDelta(data, previousPR.data)}s`;
+
     await saveToFirestore({
       repo: full_name,
       sha: sha,
       data,
-      branch: "123"
+      environment: environment
     });
 
-    const msg = "called it";
+    notify(body, octokit, {
+      state: "success",
+      description: msg
+    });
+
     return msg;
   } catch (e) {
     console.log(e.message);

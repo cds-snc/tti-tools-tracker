@@ -7,7 +7,7 @@ const validate = event => {
     !event.repository ||
     !event.repository.name ||
     !event.repository.owner ||
-    !event.repository.owner.name
+    !event.repository.owner.login
   ) {
     return false;
   }
@@ -27,15 +27,8 @@ export const notify = async (
     token: process.env.GITHUB_TOKEN
   });
 
-  const repoOwner = event.repository.owner.name;
+  const repoOwner = event.repository.owner.login;
   const repoName = event.repository.name;
-
-  if (status.state === "success" && process.env.CHARTING_URL !== "") {
-    const branch = event.ref.replace("refs/heads/", "");
-    status.target_url = `${process.env.CHARTING_URL}?repo=${
-      event.repository.full_name
-    }&branch=${branch}`;
-  }
 
   const statusObj = Object.assign(
     {

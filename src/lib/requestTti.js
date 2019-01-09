@@ -19,5 +19,5 @@ export const requestTti = async url => {
 
   const res = await lighthouse(url, opts.lighthouseFlags);
   await chrome.kill();
-  return res.report;
+  return JSON.parse(res.report);
 };
