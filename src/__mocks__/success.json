@@ -102,8 +102,8 @@
         "site_admin": false
       },
       "description": "Heroku",
-      "environment": "bundle-size-tracker-demo-pr-15",
-      "target_url": "https://dashboard.heroku.com/apps/bundle-size-tracker-demo-pr-15/activity/builds/596cb661-ebf1-48a7-a943-f0f30305d5f3",
+      "environment": "bundle-size-tracker-demo-pr-19",
+      "target_url": "https://dashboard.heroku.com/apps/bundle-size-tracker-demo-pr-19/activity/builds/596cb661-ebf1-48a7-a943-f0f30305d5f3",
       "created_at": "2019-01-07T21:07:51Z",
       "updated_at": "2019-01-07T21:07:51Z",
       "deployment_url": "https://api.github.com/repos/cds-snc/bundle-size-tracker-demo-app/deployments/122160146",
@@ -113,14 +113,14 @@
       "url": "https://api.github.com/repos/cds-snc/bundle-size-tracker-demo-app/deployments/122160146",
       "id": 122160146,
       "node_id": "MDEwOkRlcGxveW1lbnQxMjIxNjAxNDY=",
-      "sha": "8bf351bf0e7d2ce02f1297c108352e28b8c64d25",
-      "ref": "8bf351bf0e7d2ce02f1297c108352e28b8c64d25",
+      "sha": "32f67d57e29c6087b2f6e442fd066aba8525b79a",
+      "ref": "32f67d57e29c6087b2f6e442fd066aba8525b79a",
       "task": "deploy",
       "payload": {
-        "web_url": "https://bundle-size-tracker-demo-pr-15.herokuapp.com/"
+        "web_url": "https://bundle-size-tracker-demo-pr-19.herokuapp.com/"
       },
-      "original_environment": "bundle-size-tracker-demo-pr-15",
-      "environment": "bundle-size-tracker-demo-pr-15",
+      "original_environment": "bundle-size-tracker-demo-pr-19",
+      "environment": "bundle-size-tracker-demo-pr-19",
       "description": "Heroku",
       "creator": {
         "login": "maxneuvians",

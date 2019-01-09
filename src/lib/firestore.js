@@ -24,35 +24,44 @@ switch (process.env.NODE_ENV) {
     db = admin.firestore();
 }
 
-module.exports.loadFromFirestore = async (repo, sha) => {
+module.exports.loadFromFirestore = async (repo, environment) => {
   const reposRef = db.collection("tti_data");
-  const query = reposRef.where("repo", "==", repo).orderBy("timestamp", "desc");
-  let results = {};
-  return query.get().then(resp => {
-    var items = [];
-    resp.forEach(r => items.push(r.data()));
-    items.forEach(i => (results[i.sha] = i));
-    const masters = items
-      .filter(i => i.branch === "refs/heads/master")
-      .sort((a, b) => b.timestamp - a.timestamp);
-    if (results.hasOwnProperty(sha)) {
-      return [
-        results[sha],
-        masters.length > 0 ? masters[0] : { data: [{ files: [] }] }
-      ];
-    } else {
-      return [
-        masters.length > 0 ? masters[0] : { data: [{ files: [] }] },
-        masters.length > 0 ? masters[0] : { data: [{ files: [] }] }
-      ];
-    }
-  });
+
+  const branchQuery = reposRef
+    .where("repo", "==", repo)
+    .where("environment", "==", environment)
+    .select("data.audits.interactive")
+    .orderBy("timestamp", "desc")
+    .limit(1);
+
+  const branchCollection = await branchQuery.get();
+  let branchItems = [];
+  branchCollection.forEach(r => branchItems.push(r.data()));
+
+  const masterQuery = reposRef
+    .where("repo", "==", repo)
+    .where("environment", "==", "master")
+    .select("data.audits.interactive")
+    .orderBy("timestamp", "desc")
+    .limit(1);
+
+  const masterCollection = await masterQuery.get();
+  let masterItems = [];
+  masterCollection.forEach(r => masterItems.push(r.data()));
+
+  const defaultResult = { data: { audits: { interactive: { rawValue: 0 } } } };
+
+  return [
+    branchItems.length > 0 ? branchItems[0] : defaultResult,
+    masterItems.length > 0 ? masterItems[0] : defaultResult
+  ];
 };
 
 module.exports.saveToFirestore = async payload => {
   payload["timestamp"] = Date.now();
   return db
-    .collection("bundle_sizes")
+    .collection("tti_data")
+
     .add(payload)
     .then(() => true)
     .catch(() => false);
