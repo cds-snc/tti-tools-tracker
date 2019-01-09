@@ -5,7 +5,11 @@ const parse = event => {
 
 const hasState = body => {
   if (!body || !body.deployment_status || !body.deployment_status.state) {
-    throw new Error("Invalid event data");
+    throw new Error("Invalid event deployment_status data");
+  }
+
+  if (!body.deployment || !body.deployment.sha || !body.deployment.payload) {
+    throw new Error("Invalid event deployment data");
   }
 
   return true;
