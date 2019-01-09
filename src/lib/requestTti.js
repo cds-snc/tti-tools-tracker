@@ -1,7 +1,11 @@
 const lighthouse = require("lighthouse");
 const chromeLauncher = require("chrome-launcher");
+const path = require("path");
 const BrowserFetcher = require("puppeteer/lib/BrowserFetcher");
-const browserFetcher = new BrowserFetcher(__dirname);
+
+const browserFetcher = new BrowserFetcher(
+  path.join(__dirname, "../../node_modules/puppeteer/")
+);
 const packageJson = require("puppeteer/package.json");
 const revision = packageJson.puppeteer.chromium_revision;
 const revisionInfo = browserFetcher.revisionInfo(revision);
