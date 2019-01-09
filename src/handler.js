@@ -4,7 +4,8 @@ import octokit, {
   validate,
   requestTti,
   loadFromFirestore,
-  saveToFirestore
+  saveToFirestore,
+  calculateDelta
 } from "./lib/";
 
 import { webhook } from "./__mocks__/webhook";
@@ -49,16 +50,23 @@ export const hello = async event => {
       environment
     );
 
-    /*
+    const msg = `Master: ${calculateDelta(
+      data,
+      previousMaster.data
+    )}s, Branch: ${calculateDelta(data, previousPR.data)}s`;
+
     await saveToFirestore({
       repo: full_name,
       sha: sha,
       data,
       environment: environment
     });
-    */
 
-    const msg = "called it";
+    notify(body, octokit, {
+      state: "success",
+      description: msg
+    });
+
     return msg;
   } catch (e) {
     console.log(e.message);
