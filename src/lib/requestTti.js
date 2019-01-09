@@ -6,7 +6,7 @@ let opts = {
     disableDeviceEmulation: true,
     port: ""
   },
-  chromeFlags: ["--headless"],
+  chromeFlags: ["--headless", "--no-sandbox"],
   writeTo: "./",
   sortByDate: true
 };
