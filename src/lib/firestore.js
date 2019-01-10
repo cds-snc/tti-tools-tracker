@@ -24,6 +24,21 @@ switch (process.env.NODE_ENV) {
     db = admin.firestore();
 }
 
+module.exports.copyToMaster = async sha => {
+  const reposRef = db.collection("tti_data");
+
+  const branchQuery = reposRef.where("sha", "==", sha).limit(1);
+
+  const branchCollection = await branchQuery.get();
+  let branchItems = [];
+  branchCollection.forEach(r => branchItems.push(r.data()));
+
+  if (branchItems.length > 0) {
+    branchItems[0].environment = "master";
+    await this.saveToFirestore(branchItems[0]);
+  }
+};
+
 module.exports.loadFromFirestore = async (repo, environment) => {
   const reposRef = db.collection("tti_data");
 
