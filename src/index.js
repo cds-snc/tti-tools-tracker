@@ -7,7 +7,7 @@ const localDeploymentPayload = require("./deploymentHandler")
 const localPRPayload = require("./prHandler").localPRPayload;
 
 const trackTti = async (request, response) => {
-  switch (request.headers("X-GitHub-Event")) {
+  switch (request.headers["x-github-event"]) {
     case "deployment_status":
       await deploymentHandler(request);
       response.status(200).send("Processed deployment.");
