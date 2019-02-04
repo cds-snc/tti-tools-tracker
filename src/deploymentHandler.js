@@ -1,5 +1,5 @@
 "use strict";
-import octokit, {
+import {
   notify,
   validateDeployment,
   requestTti,
@@ -18,7 +18,7 @@ export const localDeploymentPayload = async () => {
 const init = async event => {
   const body = validateDeployment(event);
 
-  await notify(body, octokit, {
+  await notify(body, {
     state: "pending",
     description: "Validating payload"
   });
@@ -36,7 +36,7 @@ export const handleDeployment = async event => {
       environment
     } = body.deployment;
 
-    await notify(body, octokit, {
+    await notify(body, {
       state: "pending",
       description: "Running Lighthouse"
     });
@@ -63,7 +63,7 @@ export const handleDeployment = async event => {
         environment: environment
       });
 
-      await notify(body, octokit, {
+      await notify(body, {
         state: "success",
         description: msg
       });
@@ -75,7 +75,7 @@ export const handleDeployment = async event => {
   } catch (e) {
     console.log(e.message);
     const body = validateDeployment(event);
-    await notify(body, octokit, { state: "error", description: e.message });
+    await notify(body, { state: "error", description: e.message });
     return false;
   }
 };
