@@ -5,12 +5,7 @@ steps:
   - name: "gcr.io/cloud-builders/yarn"
     id: "test"
     args: ["test"]
-    env:
-      [
-        "FIRESTORE_URL=''",
-        "GITHUB_TOKEN=abcd",
-        "LIGHTHOUSE_URL=''"
-      ]
+    env: ["FIRESTORE_URL=''", "GITHUB_PEM=abcd", "ISSUER_ID=abcd"]
   - name: "gcr.io/cloud-builders/gcloud"
     id: "decrypt keyfile"
     args:
@@ -33,11 +28,21 @@ steps:
       - --project=tti-tools
       - --keyring=deploy
       - --key=env
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: "decrypt github"
+    args:
+      - kms
+      - decrypt
+      - --ciphertext-file=github.pem.enc
+      - --plaintext-file=github.pem
+      - --location=global
+      - --project=tti-tools
+      - --keyring=deploy
+      - --key=github
   - name: "gcr.io/cloud-builders/yarn"
-    waitFor: ["decrypt keyfile", "decrypt .env"]
+    waitFor: ["decrypt keyfile", "decrypt .env", "decrypt github"]
     entrypoint: "bash"
     args:
       - "-c"
       - |
         if [[ "$BRANCH_NAME" == "master" ]]; then yarn global add serverless && serverless deploy; else exit 0; fi
-
