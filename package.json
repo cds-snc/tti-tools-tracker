@@ -28,6 +28,7 @@
     }
   },
   "dependencies": {
+    "@octokit/app": "^2.2.0",
     "@octokit/rest": "^16.6.1",
     "chrome-launcher": "^0.10.5",
     "dotenv-safe": "^6.1.0",
