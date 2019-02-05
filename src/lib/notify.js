@@ -37,9 +37,8 @@ export const notify = async (
     },
     status
   );
-  console.log(statusObj);
+
   const result = await client.repos.createStatus(statusObj);
-  console.log("RESULT", result);
 
   return result;
 };

@@ -17,7 +17,6 @@ export const localDeploymentPayload = async () => {
 
 const init = async event => {
   const body = validateDeployment(event);
-
   await notify(body, {
     state: "pending",
     description: "Validating payload"
