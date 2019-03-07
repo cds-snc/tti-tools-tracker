@@ -1,5 +1,5 @@
 # Time to interactive tracker
-![Phase](https://img.shields.io/badge/Phase-Alpha-f90277.svg) [![Maintainability](https://api.codeclimate.com/v1/badges/5a8169cb88b8b89aa75f/maintainability)](https://codeclimate.com/github/cds-snc/tti-tools-tracker/maintainability)
+[![Phase](https://img.shields.io/badge/Phase-Alpha-f90277.svg)](https://digital.canada.ca/products/) [![Maintainability](https://api.codeclimate.com/v1/badges/5a8169cb88b8b89aa75f/maintainability)](https://codeclimate.com/github/cds-snc/tti-tools-tracker/maintainability)
 
 **NOTE: This tool is still in testing.**
 
