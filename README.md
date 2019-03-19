@@ -17,11 +17,11 @@ You also need to be using a `deployment` implementation on GitHub. (ex. [Heroku'
 
 The tool is designed as GitHub application that subscribes to `deployment` events (https://developer.github.com/v3/repos/deployments/) on pull request branches. The specific use case at CDS targets [Heroku's Review apps](https://devcenter.heroku.com/articles/github-integration-review-apps), which are created on every push to a branch. 
 
-Once the application receives the event, it extracts the URL for the application, loads the URL using [Lighthouse](https://developers.google.com/web/tools/lighthouse/), and and returns the time it takes for the URL to become interactive. The result is then saved in a database and if there are previous results for that branch, a delta is calculated.
+Once the application receives the event, it extracts the URL for the application, loads the URL using [Lighthouse](https://developers.google.com/web/tools/lighthouse/), and returns the time it takes for the URL to become interactive. The result is then saved in a database and if there are previous results for that branch, a delta is calculated.
 
 ### Implementation
 
-The tool is implemented as a Google Cloud function. Any merges to master are automatically deployed after testing passes using Google's Cloud build service (check `cloudbuild.yaml` for more information). [Lighthouse](https://developers.google.com/web/tools/lighthouse/) is used to determin the time to interaction for a given URL. Google's Firestore is used a database to track values so that deltas can be calculated.
+The tool is implemented as a Google Cloud function. Any merges to master are automatically deployed after testing passes using Google's Cloud build service (check `cloudbuild.yaml` for more information). [Lighthouse](https://developers.google.com/web/tools/lighthouse/) is used to determine the time to interaction for a given URL. Google's Firestore is used a database to track values so that deltas can be calculated.
 
 ### Questions?
 
