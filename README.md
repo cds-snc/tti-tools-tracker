@@ -9,7 +9,7 @@ The purpose of this tool is to check how long an application takes before it can
 
 ### How do I use it?
 
-All you need to do is install the GitHub application found here: _Coming soon!_
+All you need to do is install the [GitHub application](https://github.com/apps/cds-snc-time-to-interactive).
 
 You also need to be using a `deployment` implementation on GitHub. (ex. [Heroku's Review apps](https://devcenter.heroku.com/articles/github-integration-review-apps)).
 
